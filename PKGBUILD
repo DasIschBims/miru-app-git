@@ -20,7 +20,7 @@ pkgver() {
   echo $(git rev-list --count dev).$(git rev-parse --short dev)
 }
 
-prepare(){
+prepare() {
   cd $_pkgname
 
   # Prepare Flutter
@@ -37,6 +37,14 @@ build() {
 }
 
 package() {
+  # Create missing directories
+  mkdir -p "$pkgdir/usr/share/icons"
+  mkdir -p "$pkgdir/usr/share/applications"
+
+  # Move icon and desktop entry to /usr/share
+  cp "$_pkgname/assets/icon/logo.png" "$pkgdir/usr/share/icons/miru.png"
+  cp "../Miru.desktop" "$pkgdir/usr/share/applications/Miru.desktop"
+
   cd "$_pkgname/build/linux/x64/release/bundle/"
 
   # Create target directories
@@ -44,6 +52,9 @@ package() {
 
   # Copy the bundled output to /opt
   cp -rdp --no-preserve=ownership . "$pkgdir/opt/$_pkgname/"
+
+  # Add license
+  cp "$srcdir/$_pkgname/LICENSE" "$pkgdir/usr/bin/LICENSE"
 
   # Symlink to /usr/bin so the app can be found in PATH
   ln -s "/opt/$_pkgname/miru" "$pkgdir/usr/bin/$_pkgname"
