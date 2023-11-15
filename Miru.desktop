@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+TryExec=miru-app
+Exec=miru-app
+Icon=miru
+Terminal=false
+Categories=Audio;Video;AudioVideo;
+
+Name=Miru
+GenericName=Miru
+Comment=A versatile application that is free, open-source, and supports extension sources for videos, comics, and novels, available on Android, Windows, and Web platforms.
+StartupWMClass=Miru
+Actions=New;
+
+[Desktop Action New]
+Name=Open Miru
+Exec=miru-app
